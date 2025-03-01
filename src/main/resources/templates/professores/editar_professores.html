@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title th:replace="~{home :: titulo}"></title>
+ 
+    <style>
+        .red{
+         color:red;
+         font-weight: bolder;
+        }
+    </style>
+    <script>
+        // Função para formatar valores como moeda
+        function formatarMoeda(valor) {
+            // Remove qualquer caracter não numérico
+            valor = valor.replace(/\D/g, '');
+
+            // Se o valor estiver vazio, retorna '0,00'
+            if (!valor) return 'R$ 0,00';
+
+            // Adiciona separadores de milhar e formata o valor
+            valor = valor.replace(/(\d)(\d{8})$/, '$1.$2');
+            valor = valor.replace(/(\d)(\d{5})$/, '$1.$2');
+            valor = valor.replace(/(\d)(\d{2})$/, '$1,$2');
+
+            // Adiciona o prefixo 'R$'
+            return 'R$ ' + valor;
+        }
+
+        // Função para aplicar a formatação enquanto o usuário digita
+        function formatarInput(event) {
+            let valor = event.target.value;
+            event.target.value = formatarMoeda(valor);
+        }
+
+        // Aplica o evento de input aos campos de salário e comissão
+        document.getElementById('salario').addEventListener('input', formatarInput);
+        document.getElementById('comissao').addEventListener('input', formatarInput);
+        // Função para formatar o CPF
+        function formatarCPF(cpf) {
+            cpf = cpf.replace(/\D/g, ''); // Remove tudo que não for número
+            cpf = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4'); // Adiciona a formatação
+            return cpf;
+        }
+
+        // Função para formatar o Telefone
+        function formatarTelefone(telefone) {
+            telefone = telefone.replace(/\D/g, ''); // Remove tudo que não for número
+            telefone = telefone.replace(/^(\d{2})(\d)/, '($1) $2'); // Adiciona os parênteses ao DDD
+            telefone = telefone.replace(/(\d{5})(\d{4})/, '$1-$2'); // Adiciona o traço após o 5º dígito
+            return telefone;
+        }
+         // Função para formatar o Cep
+         function formatarCEP(cep) {
+            cep = cep.replace(/\D/g, ''); // Remove tudo que não for número
+            cep = cep.replace(/(\d{5})(\d{3})/, '$1-$2'); // Adiciona a formatação
+            return cep;
+        }
+
+        // Função para aplicar as máscaras durante a digitação
+        function aplicarMascara(event, tipo) {
+            let valor = event.target.value;
+            if (tipo === 'cpf') {
+                event.target.value = formatarCPF(valor);
+            } else if (tipo === 'telefone') {
+                event.target.value = formatarTelefone(valor);
+            }else if(tipo == 'cep'){
+                event.target.value = formatarCEP(valor);
+            }
+        }
+    </script>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav th:replace="~{home :: home}"></nav>
+ 
+
+    <div class="container mt-3" style="padding-left: 100px; padding-right: 100px;">
+        <h2>Editar Professor</h2>
+        <div class="form">
+            <form th:action="@{/professores/editar}"method="post" 
+            enctype="multipart/form-data" th:object="${profs}" class="row g-1">
+                <!-- Campo oculto para ID -->
+               
+                <div class="col-md-12">
+                        <input type="hidden" id="id" name="id" th:field="*{id}">
+                        <strong><p th:text="'ID :'+${profs.id}"></p></strong>
+                    </div>
+                <div class="col-md-6">
+                    <label for="cpf">CPF:<span class="red">*</span></label>
+                    <input type="text" id="cpf" th:field="*{cpf}" class="form-control" required
+                    maxlength="14" oninput="aplicarMascara(event, 'cpf')">
+                    <div th:if="${#fields.hasErrors('cpf')}" class="text-danger">
+                        <span th:errors="*{cpf}"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="nome">Nome:<span class="red">*</span></label>
+                    <input type="text" id="nome" th:field="*{nome}" class="form-control" required>
+                    <div th:if="${#fields.hasErrors('nome')}" class="text-danger">
+                        <span th:errors="*{nome}"></span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label for="foto">Foto:</label>
+                    <input type="file" id="foto"  name="foto"  class="form-control">
+                </div>
+                <div class="col-md-12">
+                    <label for="foto">Foto antiga:</label>
+                     <br>
+                    <img th:src="@{/imagens/{imagem}(imagem=${profs.nomeFoto})}" alt="Foto do Aluno" width="150" height="150" class="img-thumbnail"/>
+                </div>
+                     
+                <div class="col-md-4">
+                    <label for="endereco">Endereço:</label>
+                    <input type="text" id="endereco" th:field="*{endereco}" class="form-control">
+                  
+                </div>
+                <div class="col-md-4">
+                    <label for="endereco">Cidade:</label>
+                    <input type="text" id="cidade" th:field="*{cidade}" class="form-control">
+                    
+                </div>
+                <div class="col-md-4">
+                    <label for="estado">Estado:</label>
+                    <select id="estado"  class="form-control" name="estado" th:field="*{estado}">
+                            <option value="" disabled selected>Selecione um estado</option>
+                            <option value="Acre">Acre</option>
+                            <option value="Alagoas">Alagoas</option>
+                            <option value="Amapá">Amapá</option>
+                            <option value="Amazonas">Amazonas</option>
+                            <option value="Bahia">Bahia</option>
+                            <option value="Ceará">Ceará</option>
+                            <option value="Espírito Santo">Espírito Santo</option>
+                            <option value="Goiás">Goiás</option>
+                            <option value="Maranhão">Maranhão</option>
+                            <option value="Mato Grosso">Mato Grosso</option>
+                            <option value="Mato Grosso do Sul">Mato Grosso do Sul</option>
+                            <option value="Minas Gerais">Minas Gerais</option>
+                            <option value="Pará">Pará</option>
+                            <option value="Paraíba">Paraíba</option>
+                            <option value="Paraná">Paraná</option>
+                            <option value="Pernambuco">Pernambuco</option>
+                            <option value="Piauí">Piauí</option>
+                            <option value="Rio de Janeiro">Rio de Janeiro</option>
+                            <option value="Rio Grande do Norte">Rio Grande do Norte</option>
+                            <option value="Rio Grande do Sul">Rio Grande do Sul</option>
+                            <option value="Rondônia">Rondônia</option>
+                            <option value="Roraima">Roraima</option>
+                            <option value="Santa Catarina">Santa Catarina</option>
+                            <option value="São Paulo">São Paulo</option>
+                            <option value="Sergipe">Sergipe</option>
+                            <option value="Tocantins">Tocantins</option>
+                        
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="cep">Cep:</label>
+                    <input type="text" id="cep" th:field="*{cep}" class="form-control" maxlength="9" oninput="aplicarMascara(event, 'cep')">
+                    
+                </div>
+
+                <div class="col-md-4">
+                    <label for="telefone">Telefone:</label>
+                    <input type="text" id="telefone" th:field="*{telefone}"  maxlength="15" oninput="aplicarMascara(event, 'telefone')" class="form-control">
+                </div>
+                
+                 
+                <div class="col-md-6">
+                    <label for="comissao">Comissão:</label>
+                    <input type="text" id="comissao" th:field="*{comissao}" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label for="salario">Salário:</label>
+                    <input type="text" id="salario" th:field="*{salario}" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label for="turma">Turmas:</label>
+                    <div th:each="turma : ${todasTurmas}">
+                        <input type="checkbox" th:id="'turma_' + ${turma.id}" 
+                            th:name="turmasprof" th:value="${turma.id}"
+                            th:checked="${profTurmas.contains(turma)}" />
+                        <label th:for="'turma_' + ${turma.id}" th:text="${turma.descricao}"></label>
+                    </div>
+                </div> 
+                                           
+                <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
