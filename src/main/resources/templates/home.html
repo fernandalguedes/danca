@@ -10,8 +10,8 @@
    
     <nav th:fragment="home" class="navbar navbar-expand-lg navbar-dark" style="background-color: #04a197be;padding:10px">
         <a class="navbar-brand" href="/"><img th:src="@{/imagens/icone.webp}"  width="30" height="30" class="d-inline-block align-top" alt="">
-            Duo Dança - Sistema de alunos</a>
-        <div class="collapse navbar-collapse" id="navbarNav">
+            Duo Dança - Sistema de alunos - Home</a>
+        <!--<div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" th:href="@{/alunos/inserir}">Inserir Aluno</a></li>
                 <li class="nav-item"><a class="nav-link" th:href="@{/alunos/listar}">Listar Alunos</a></li>
@@ -24,11 +24,72 @@
                 <li class="nav-item"><a class="nav-link" th:href="@{/professores/inserir}">Inserir Professor</a></li>
                 <li class="nav-item"><a class="nav-link"  th:href="@{/professores/listar}">Listar Professores</a></li>
             </ul>
-        </div>
+        </div>-->
     </nav>
-
+<!--
     <div class="container mt-4">
         <h1>Bem-vindo ao Sistema de Alunos</h1>
+    </div>-->
+    <div class="row">
+        <div class="col-sm-3 m-1">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Alunos</h5>
+              <p class="card-text">Informações sobre alunos</p>
+              <a th:href="@{/alunos/inserir}" class="btn btn-primary">Inserir</a>
+              <a th:href="@{/alunos/listar}" class="btn btn-primary">Listar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 m-1">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Turmas</h5>
+              <p class="card-text">Informações sobre turmas</p>
+              <a th:href="@{/turmas/inserir}" class="btn btn-primary">Inserir</a>
+              <a th:href="@{/turmas/listar}" class="btn btn-primary">Listar</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3 m-1">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Turmas X Alunos</h5>
+                <p class="card-text">Informações sobre turmas e alunos</p>
+                <a th:href="@{/turmas/listar_com_alunos}" class="btn btn-primary">Listar</a>
+              </div>
+            </div>
+          </div>
+        <div class="col-sm-3 m-1">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Professores</h5>
+                <p class="card-text">Informações sobre professores</p>
+                <a th:href="@{/professores/inserir}" class="btn btn-primary">Inserir</a>
+                <a th:href="@{/professores/listar}" class="btn btn-primary">Listar</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-3 m-1">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Despesas</h5>
+                <p class="card-text">Informações sobre despesas</p>
+                <a href="" class="btn btn-primary">Inserir</a>
+                <a href="" class="btn btn-primary">Listar</a>
+              </div>
+            </div>
+         </div>
+         <div class="col-sm-3 m-1">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Tipos despesas</h5>
+                <p class="card-text">Cadastro de tipos</p>
+                <a href="" class="btn btn-primary">Inserir</a>
+                <a href="" class="btn btn-primary">Listar</a>
+              </div>
+            </div>
+          </div>
     </div>
-</body>
+ </body>
 </html>
