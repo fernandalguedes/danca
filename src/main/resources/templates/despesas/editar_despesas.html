@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <title th:replace="~{home :: titulo}"></title>
+ 
+    <style>
+        .red{
+         color:red;
+         font-weight: bolder;
+        }
+    </style>
+     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav th:replace="~{home :: home}"></nav>
+ 
+
+    <div class="container mt-3" style="padding-left: 100px; padding-right: 100px;">
+        <h2>Editar Despesa</h2>
+        <div class="form">
+            <form th:action="@{/despesas/editar}"method="post" enctype="multipart/form-data" th:object="${despesas}" class="row g-1">
+                <!-- Campo oculto para ID -->
+                <div class="col-md-12">
+                        <input type="hidden" id="id" name="id" th:field="*{id}">
+                        <strong><p th:text="'ID :'+${despesas.id}"></p></strong>
+                    </div>
+                <div class="col-md-12">
+                    <label for="mes">Mês:</label>
+                    <select id="mes"  class="form-control" name="mes" th:field="*{mes}">
+                            <option value="" disabled selected>Selecione mês</option>
+                            <option value="Janeiro">Janeiro</option>
+                            <option value="Fevereiro">Fevereiro</option>
+                            <option value="Março">Março</option>
+                            <option value="Abril">Abril</option>
+                            <option value="Maio">Maio</option>
+                            <option value="Junho">Junho</option>
+                            <option value="Julho">Julho</option>
+                            <option value="Agosto">Agosto</option>
+                            <option value="Setembro">Setembro</option>
+                            <option value="Outubro">Outrubro</option>
+                            <option value="Novembro">Novembro</option>
+                            <option value="Dezembro">Dezembro</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="descricao">Descrição:<span class="red">*</span></label>
+                    <input type="text" id="descricao" th:field="*{descricao}" class="form-control" required>
+                  
+                </div>
+                <div class="col-md-4">
+                    <label for="valor">Valor - R$:<span class="red">*</span></label>
+                    <input type="text" id="valor" th:field="*{valor}" class="form-control" required>
+                   
+                </div>
+                              
+        
+                <div class="col-md-4">
+                    <label for="dt_despesa">Data de Despesa:</label>
+                    <input type="date" class="form-control" id="dt_despesa" th:field="*{dt_despesa}">
+                </div>
+                <div class="col-md-8">
+                    <label for="tipo">Tipo:</label>
+                   <input type="radio"  id="tipo" name="tipo" th:field="*{tipo}" value="Despesas Fixas">
+                   Despesas Fixas: <input type="radio" id="tipo"  name="tipo" th:field="*{tipo}" value="Despesas Variáveis">
+                   Despesas Variáveis:
+                </div>          
+                            
+                <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

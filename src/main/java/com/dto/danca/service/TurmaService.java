@@ -28,7 +28,6 @@ public class TurmaService {
     }
 
 
-
     public List<Turma> listarTurmas() {
         return turmaRepository.findAll();
     }
