@@ -1,7 +1,9 @@
 package com.dto.danca.service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +43,28 @@ public class DespesasService {
     public BigDecimal calcularTotal() {
         return despesasRepository.calcularTotal();
     }
+
+    public Map<String, BigDecimal> calcularDespesasPorMesEAno(int mes, int ano) {
+    List<Object[]> resultado = despesasRepository.calcularDespesasPorMesEAno(mes, ano);
+    Map<String, BigDecimal> totais = new HashMap<>();
+
+        if (!resultado.isEmpty()) {
+            Object[] linha = resultado.get(0);
+            BigDecimal totalFixas = (BigDecimal) linha[2];
+            BigDecimal totalVariaveis = (BigDecimal) linha[3];
+            BigDecimal totalGeral = (BigDecimal) linha[4];
+
+            totais.put("fixas", totalFixas);
+            totais.put("variaveis", totalVariaveis);
+            totais.put("geral", totalGeral);
+        } else {
+            totais.put("fixas", BigDecimal.ZERO);
+            totais.put("variaveis", BigDecimal.ZERO);
+            totais.put("geral", BigDecimal.ZERO);
+        }
+
+        return totais;
+}
+
 
 }

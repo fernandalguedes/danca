@@ -2,7 +2,12 @@ package com.dto.danca.controller;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Year;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -53,6 +58,33 @@ public class DespesasController {
         return "despesas/listar_despesas";
        
     }
+    
+    @GetMapping("/listar_despesas_mes")
+    public String listarDespesas( 
+        @RequestParam(name = "mes", required = false) Integer mes,
+        @RequestParam(name = "ano", required = false) Integer ano,
+        Model model) {
+
+        Map<String, BigDecimal> totais = new HashMap<>();
+        if (mes != null && ano != null) {
+            totais = despesasService.calcularDespesasPorMesEAno(mes, ano);
+        }
+
+        List<Integer> meses = IntStream.rangeClosed(1, 12).boxed().collect(Collectors.toList());
+        int anoAtual = Year.now().getValue();
+        List<Integer> anos = IntStream.rangeClosed(anoAtual - 5, anoAtual).boxed().collect(Collectors.toList());
+
+        model.addAttribute("meses", meses);
+        model.addAttribute("anos", anos);
+        model.addAttribute("mesSelecionado", mes);
+        model.addAttribute("anoSelecionado", ano);
+        model.addAttribute("totalFixas", totais.getOrDefault("fixas", BigDecimal.ZERO));
+        model.addAttribute("totalVariaveis", totais.getOrDefault("variaveis", BigDecimal.ZERO));
+        model.addAttribute("totalGeral", totais.getOrDefault("geral", BigDecimal.ZERO));
+        
+        return "despesas/despesas_por_mes";
+    }
+
     
     @GetMapping("/inserir")
     public String inserirDespesasForm(Model model) {
