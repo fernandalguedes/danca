@@ -16,6 +16,7 @@ public class DespesasDTO {
     private BigDecimal valor;
     private LocalDate dt_despesa;
     private String mes;
+    private Integer ano;
     private String tipo;
   
 }

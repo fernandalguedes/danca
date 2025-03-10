@@ -40,7 +40,10 @@ public class Despesas {
    
     @Column
     private String mes;
-
+ 
+    @Column
+    private Integer ano;
+ 
     @Column
     private String tipo; // despesas fixas e variáveis
 

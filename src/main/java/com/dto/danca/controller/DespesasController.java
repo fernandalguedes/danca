@@ -46,15 +46,14 @@ public class DespesasController {
         BigDecimal totalFixas = despesasService.calcularTotalPorTipo("Despesas Fixas");
         BigDecimal totalVariaveis = despesasService.calcularTotalPorTipo("Despesas Variáveis");
         BigDecimal total = despesasService.calcularTotal();
-
-
         model.addAttribute("despesas", despesas);
         model.addAttribute("despesasFixas", despesasFixas);
         model.addAttribute("despesasVariaveis", despesasVariaveis);
         model.addAttribute("totalFixas", totalFixas);
         model.addAttribute("totalVariaveis", totalVariaveis);
         model.addAttribute("total", total);
-        
+       
+       
         return "despesas/listar_despesas";
        
     }

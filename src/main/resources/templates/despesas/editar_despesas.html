@@ -29,8 +29,8 @@
                         <strong><p th:text="'ID :'+${despesas.id}"></p></strong>
                     </div>
                 <div class="col-md-12">
-                    <label for="mes">Mês:</label>
-                    <select id="mes"  class="form-control" name="mes" th:field="*{mes}">
+                    <label for="mes">Mês referência:</label>
+                     <select id="mes"  class="form-control" name="mes" th:field="*{mes}">
                             <option value="" disabled selected>Selecione mês</option>
                             <option value="Janeiro">Janeiro</option>
                             <option value="Fevereiro">Fevereiro</option>
@@ -41,7 +41,7 @@
                             <option value="Julho">Julho</option>
                             <option value="Agosto">Agosto</option>
                             <option value="Setembro">Setembro</option>
-                            <option value="Outubro">Outrubro</option>
+                            <option value="Outubro">Outubro</option>
                             <option value="Novembro">Novembro</option>
                             <option value="Dezembro">Dezembro</option>
                     </select>
@@ -59,7 +59,7 @@
                               
         
                 <div class="col-md-4">
-                    <label for="dt_despesa">Data de Despesa:</label>
+                    <label for="dt_despesa">Data de Pagto:</label>
                     <input type="date" class="form-control" id="dt_despesa" th:field="*{dt_despesa}">
                 </div>
                 <div class="col-md-8">
