@@ -90,6 +90,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Ano</th>
                         <th>Mês</th>
                         <th>Descrição</th>
                         <th>Valor</th>
@@ -102,6 +103,7 @@
                 <tbody>
                     <tr th:each="despesa : ${despesas}">
                         <td th:text="${despesa.id}"></td>
+                        <td th:text="${despesa.ano}"></td>
                         <td th:text="${despesa.mes}"></td>
                         <td th:text="${despesa.descricao}"></td>
                         <td>R$ <span th:text="${#numbers.formatDecimal(despesa.valor, 1, 2, 'COMMA')}"></span></td>
